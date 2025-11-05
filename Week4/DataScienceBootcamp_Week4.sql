@@ -1,32 +1,27 @@
 -- Question 1
--- Find actor-director pairs who collaborated at least three times
 SELECT actor_id, director_id
 FROM ActorDirector
 GROUP BY actor_id, director_id
 HAVING COUNT(timestamp) >= 3;
 
 -- Question 2
--- Format each user's name with only the first letter capitalized
 SELECT user_id,
        CONCAT(UPPER(LEFT(name, 1)), LOWER(SUBSTRING(name, 2))) AS name
 FROM Users
 ORDER BY user_id;
 
 -- Question 3
--- Retrieve people with their associated address information
 SELECT firstName, lastName, city, state
 FROM Person
 LEFT JOIN Address
 ON Person.personId = Address.personId;
 
 -- Question 4
--- Get the second-highest salary from the Employee table
 SELECT MAX(salary) AS "SecondHighestSalary"
 FROM Employee
 WHERE salary NOT IN (SELECT MAX(salary) FROM Employee);
 
 -- Question 5
--- Find products that sold at least 100 units in February
 SELECT p.product_name, SUM(o.unit) AS unit
 FROM Products p
 JOIN Orders o
@@ -36,14 +31,12 @@ GROUP BY p.product_name
 HAVING unit >= 100;
 
 -- Question 6
--- List employees along with their unique IDs (if available)
 SELECT eu.unique_id, e.name
 FROM Employees e
 LEFT JOIN EmployeeUNI eu
 ON eu.id = e.id;
 
 -- Question 7
--- Calculate the fraction of players who returned the day after their first login
 WITH first_login AS (
     SELECT player_id, MIN(event_date) AS first_date
     FROM Activity
@@ -59,7 +52,6 @@ JOIN first_login f
 ON a.player_id = f.player_id;
 
 -- Question 8
--- Calculate the average experience (in years) of employees per project
 SELECT project_id, ROUND(AVG(experience_years), 2) AS average_years
 FROM Project
 JOIN Employee
@@ -67,7 +59,6 @@ ON Project.employee_id = Employee.employee_id
 GROUP BY project_id;
 
 -- Question 9
--- Retrieve the top three highest-paid employees within each department
 SELECT Department, Employee, Salary
 FROM (
     SELECT 
